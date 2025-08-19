@@ -154,8 +154,7 @@
     border-radius: var(--radius);
 }
 
-.post-content .highlight:not(table),
-.post-content .chroma:not(table) {
+.post-content .highlight:not(table) {
     margin: 10px auto;
     background: var(--code-block-bg) !important;
     border: 1px solid var(--border);
@@ -174,6 +173,14 @@
 
 .post-content .highlight pre,
 .post-content .chroma pre { margin: 0; }
+
+/* Ensure inner Chroma element does not draw a second frame */
+.post-content pre.chroma,
+.post-content .highlight pre.chroma {
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+}
 
 .post-content .highlighttable {
     table-layout: fixed;

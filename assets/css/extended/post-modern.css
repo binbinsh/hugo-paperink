@@ -22,7 +22,8 @@
     grid-column: 2;
     border-bottom: 1px solid var(--border);
     padding-bottom: var(--gap);
-    margin-bottom: calc(var(--gap) * 2);
+    /* Reset generic header margins from base to match reference */
+    margin: 0 0 calc(var(--gap) * 2) 0;
 }
 
 .post-modern .post-header .post-title {
@@ -30,7 +31,7 @@
     font-weight: 400;
     letter-spacing: -0.04em;
     line-height: 1.15;
-    margin-bottom: var(--gap);
+    margin: 0 0 var(--gap) 0;
 }
 
 .post-modern .article-meta {
@@ -137,6 +138,12 @@
     font-size: 1.0625rem;
     line-height: 1.7;
     font-variation-settings: "opsz" 17, "wdth" 100, "GRAD" 0;
+    margin-top: 0;
+}
+
+/* Remove leading margin for the first content element directly under .post-content */
+.post-modern .post-content > *:first-child {
+    margin-top: 0;
 }
 
 .post-modern .post-content h2,
