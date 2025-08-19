@@ -155,7 +155,7 @@
 }
 
 .post-content .highlight:not(table) {
-    margin: 10px auto;
+    margin: 10px auto 0; /* remove bottom margin to tighten spacing below code blocks */
     background: var(--code-block-bg) !important;
     border: 1px solid var(--border);
     border-radius: var(--radius);
@@ -172,7 +172,10 @@
 }
 
 .post-content .highlight pre,
-.post-content .chroma pre { margin: 0; }
+.post-content .chroma pre { 
+    margin: 0; 
+    margin-bottom: 0 !important;
+}
 
 /* Ensure inner Chroma element does not draw a second frame */
 .post-content pre.chroma,

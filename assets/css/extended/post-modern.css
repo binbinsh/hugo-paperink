@@ -99,8 +99,15 @@
 
 .post-modern > .toc ul ul,
 .post-modern > .toc nav ul ul {
-    padding-left: 16px;
-    margin: 4px 0;
+    padding-inline-start: 0;
+    margin-inline-start: 16px;
+    margin-top: 4px;
+    margin-bottom: 4px;
+}
+
+/* Deeper nesting gets additional indentation */
+.post-modern > .toc nav ul ul ul {
+    margin-inline-start: 28px;
 }
 
 .post-modern > .toc a {
@@ -174,7 +181,6 @@
 .post-modern .post-content blockquote {
     background: rgba(245, 158, 11, 0.03);
     border: 1px solid #f59e0b; /* warm accent */
-    border-inline-start: 0;
     border-radius: 4px;
     color: var(--secondary);
     font-size: 0.95rem;

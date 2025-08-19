@@ -27,3 +27,51 @@
     map.forEach(function (m) { io.observe(m.el); });
   })();
 </script>
+
+<script>
+  (function () {
+    function isMermaidDiagram(text) {
+      if (!text) return false;
+      var t = text.replace(/^\s+/, '');
+      return /^(graph|flowchart|sequenceDiagram|gantt|classDiagram|stateDiagram|erDiagram|journey|gitGraph|pie|mindmap|timeline|quadrantChart|xychart-beta|packet)/.test(t);
+    }
+
+    function convertMermaidCodeBlocks() {
+      var selectors = [
+        'pre code.language-mermaid',
+        'pre code[class*="language-mermaid"]',
+        'pre code.language-fallback'
+      ];
+      var nodes = document.querySelectorAll(selectors.join(','));
+      nodes.forEach(function (codeEl) {
+        var text = codeEl.textContent || '';
+        var isExplicit = codeEl.className && codeEl.className.indexOf('language-mermaid') !== -1;
+        if (!isExplicit && !isMermaidDiagram(text)) return;
+        var container = document.createElement('div');
+        container.className = 'mermaid';
+        container.textContent = text;
+        var pre = codeEl.closest('pre');
+        if (pre && pre.parentNode) pre.parentNode.replaceChild(container, pre);
+      });
+    }
+
+    function initMermaid() {
+      if (window.mermaid) {
+        try {
+          window.mermaid.initialize({ startOnLoad: true, securityLevel: 'loose' });
+        } catch (e) {}
+      }
+    }
+
+    function run() {
+      convertMermaidCodeBlocks();
+      initMermaid();
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', run);
+    } else {
+      run();
+    }
+  })();
+</script>
