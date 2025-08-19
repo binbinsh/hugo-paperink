@@ -1,3 +1,29 @@
 {{- /* Footer custom content area start */ -}}
 {{- /*     Insert any custom code web-analytics, resources, etc. here */ -}}
 {{- /* Footer custom content area end */ -}}
+<script>
+  (function () {
+    var toc = document.querySelector('.post-modern > .toc');
+    if (!toc) return;
+    var links = toc.querySelectorAll('a[href^="#"]');
+    var map = [];
+    links.forEach(function (a) {
+      var id = decodeURIComponent(a.getAttribute('href').slice(1));
+      var el = document.getElementById(id);
+      if (el) map.push({ a: a, el: el });
+    });
+    var active;
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        var id = e.target.id;
+        var item = map.find(function (m) { return m.el.id === id; });
+        if (!item) return;
+        if (active) active.classList.remove('active');
+        item.a.classList.add('active');
+        active = item.a;
+      });
+    }, { rootMargin: '0px 0px -70% 0px', threshold: [0, 1] });
+    map.forEach(function (m) { io.observe(m.el); });
+  })();
+</script>

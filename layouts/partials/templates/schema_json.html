@@ -20,6 +20,27 @@
   ]
 }
 </script>
+{{- /* Home ItemList for visible posts on home */ -}}
+{{- $homePages := where site.RegularPages "Type" "in" site.Params.mainSections -}}
+{{- $homePages = where $homePages "Params.hiddenInHomeList" "!=" "true" -}}
+{{- $homePages = sort $homePages "Date" "desc" -}}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "itemListElement": [
+  {{- range $index, $p := first 50 $homePages -}}
+    {{- if $index }}, {{ end -}}
+    {
+      "@type": "ListItem",
+      "position": {{ add $index 1 }},
+      "url": {{ $p.Permalink }},
+      "name": {{ $p.Title | plainify }}
+    }
+  {{- end -}}
+  ]
+}
+</script>
 {{- else if (or .IsPage .IsSection) }}
 {{/* BreadcrumbList */}}
 {{- $url := replace .Parent.Permalink ( printf "%s" site.Home.Permalink) "" }}
@@ -125,4 +146,25 @@
 </script>
 {{- end }}{{/* .IsPage end */}}
 
+{{- end -}}
+
+{{- /* ItemList for taxonomy term pages (e.g., /tags/<tag>) */ -}}
+{{- if eq .Kind "term" -}}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "itemListElement": [
+  {{- range $index, $p := .Pages -}}
+    {{- if $index }}, {{ end -}}
+    {
+      "@type": "ListItem",
+      "position": {{ add $index 1 }},
+      "url": {{ $p.Permalink }},
+      "name": {{ $p.Title | plainify }}
+    }
+  {{- end -}}
+  ]
+}
+</script>
 {{- end -}}

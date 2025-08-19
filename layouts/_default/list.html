@@ -51,6 +51,24 @@
 {{- partial "home_info.html" . }}
 {{- end }}
 
+{{- if .IsHome }}
+<table class="posts-table">
+  {{- range $paginator.Pages }}
+  {{- if eq .Kind "page" }}
+  {{- partial "posts_table_row.html" (dict "p" .) -}}
+  {{- end }}
+  {{- end }}
+  </table>
+{{- else if eq .Kind "term" }}
+<table class="posts-table">
+  {{- range $paginator.Pages }}
+  {{- if eq .Kind "page" }}
+  {{- partial "posts_table_row.html" (dict "p" .) -}}
+  {{- end }}
+  {{- end }}
+  </table>
+{{- else }}
+
 {{- $term := .Data.Term }}
 {{- range $index, $page := $paginator.Pages }}
 
@@ -90,7 +108,9 @@
   </footer>
   {{- end }}
   <a class="entry-link" aria-label="post link to {{ .Title | plainify }}" href="{{ .Permalink }}"></a>
-</article>
+  </article>
+{{- end }}
+
 {{- end }}
 
 {{- if gt $paginator.TotalPages 1 }}

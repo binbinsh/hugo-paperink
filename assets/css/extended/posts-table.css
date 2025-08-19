@@ -1,0 +1,68 @@
+.main .posts-table {
+    border-collapse: collapse;
+    font-size: 1rem;
+    margin-top: 2rem;
+    width: 100%;
+}
+
+.main .posts-table tr {
+    border-bottom: 1px solid var(--border);
+    transition: background-color 0.2s ease;
+}
+
+.main .posts-table tr:hover {
+    background-color: rgba(0, 0, 0, 0.02);
+}
+
+.dark .main .posts-table tr:hover {
+    background-color: rgba(255, 255, 255, 0.03);
+}
+
+.main .posts-table td {
+    padding: 0.75rem 1rem;
+    vertical-align: top;
+}
+
+.main .posts-table .post-title {
+    width: 99%;
+}
+
+.main .posts-table .post-title a {
+    font-weight: 500;
+    display: inline-block;
+}
+
+.main .posts-table .post-title a:focus-visible {
+    outline: 2px solid var(--tertiary);
+    outline-offset: 2px;
+    text-decoration: none;
+}
+
+.main .posts-table .post-title a .post-date,
+.main .posts-table .post-title a time.post-date {
+    color: var(--secondary);
+    margin-inline-end: 0.5rem;
+    white-space: nowrap;
+}
+
+.main .posts-table .post-meta {
+    color: var(--secondary);
+    font-size: 0.9rem;
+    font-variant-numeric: tabular-nums;
+    padding-top: 1rem;
+    text-align: right;
+    white-space: nowrap;
+    width: 1%;
+}
+
+@media (max-width: 800px) {
+    .main .posts-table td:first-child { padding-left: 0; }
+    .main .posts-table td:last-child { padding-right: 0; }
+}
+
+/* Optional tighter mobile: hide reading time on very small screens */
+@media (max-width: 480px) {
+    .main .posts-table .post-meta { display: none; }
+}
+
+
