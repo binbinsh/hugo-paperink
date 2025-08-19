@@ -2,7 +2,11 @@
 {{- if (and .Params.cover.image (not $.isHidden)) }}
 <figure class="entry-cover">
     {{- $loading := cond $.IsSingle "eager" "lazy" }}
-    {{- $addLink := (and site.Params.cover.linkFullImages $.IsSingle) }}
+    {{- /* Default to linking full images on single pages unless explicitly disabled in site params */ -}}
+    {{- $coverParams := cond (isset site.Params "cover") (index site.Params "cover") (dict) -}}
+    {{- $linkFullDefined := isset $coverParams "linkFullImages" -}}
+    {{- $linkFullImages := cond $linkFullDefined (index $coverParams "linkFullImages") true -}}
+    {{- $addLink := and $linkFullImages $.IsSingle }}
     {{- $prod := (hugo.IsProduction | or (eq site.Params.env "production")) }}
     {{- $alt := (.Params.cover.alt | default .Params.cover.caption | plainify) }}
     {{- $responsiveImages := (.Params.cover.responsiveImages | default site.Params.cover.responsiveImages) | default true }}
