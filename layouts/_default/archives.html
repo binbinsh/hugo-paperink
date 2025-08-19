@@ -52,7 +52,7 @@
       <sup class="archive-count">&nbsp;{{ len (where .Pages "Kind" "page") }}</sup>
     </h3>
     <div class="archive-posts">
-      <table class="posts-table">
+      <table class="posts-table" style="table-layout:auto;">
         {{- range (where .Pages "Kind" "page") }}
         {{- partial "posts_table_row.html" (dict "p" .) -}}
         {{- end }}

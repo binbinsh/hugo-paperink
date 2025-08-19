@@ -52,7 +52,7 @@
 {{- end }}
 
 {{- if .IsHome }}
-<table class="posts-table">
+<table class="posts-table" style="table-layout:auto;">
   {{- range $paginator.Pages }}
   {{- if eq .Kind "page" }}
   {{- partial "posts_table_row.html" (dict "p" .) -}}

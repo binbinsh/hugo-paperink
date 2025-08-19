@@ -16,7 +16,7 @@ main .posts-table {
     color: #888;
     font-size: .9rem;
     font-variant-numeric: tabular-nums;
-    padding-top: 1rem;
+    padding-top: .5rem;
     text-align: right;
     white-space: nowrap;
     width: 1%;
@@ -24,13 +24,19 @@ main .posts-table {
 
 :is(main .posts-table) .post-title { width: 99%; }
 
-:is(main .posts-table) .post-title a { font-weight: 500; font-size: 1rem; display: inline-block; }
+:is(main .posts-table) .post-title a {
+    font-weight: 500;
+    font-size: 1rem;
+    display: inline;
+    white-space: nowrap;
+}
 
 :is(main .posts-table) .post-title a .post-date,
 :is(main .posts-table) .post-title a time.post-date {
     color: #888;
     margin-inline-end: 0.5rem;
     white-space: nowrap;
+    display: inline;
 }
 
 /* match reference: date removed from title; keep spacing consistent */

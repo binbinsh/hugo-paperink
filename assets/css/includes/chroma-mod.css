@@ -26,7 +26,7 @@
 /* Harmonize code block container with post-modern card */
 .post-modern .post-content .highlight, 
 .post-modern .post-content .chroma {
-    background: #fafafa !important;
+    background: var(--code-block-bg) !important;
     border: 1px solid var(--border);
     border-radius: var(--radius);
     box-shadow: 0 1px 3px rgba(0,0,0,.02);

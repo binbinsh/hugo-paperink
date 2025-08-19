@@ -84,15 +84,21 @@
     margin-bottom: 8px;
 }
 
-.post-modern > .toc nav,
+.post-modern > .toc nav ul,
 .post-modern > .toc > ul {
     list-style: none;
     margin: 0;
     padding-left: 0;
 }
 
-.post-modern > .toc ul ul {
-    padding-left: 12px;
+/* Ensure no markers on list items regardless of UA defaults */
+.post-modern > .toc li {
+    list-style: none;
+}
+
+.post-modern > .toc ul ul,
+.post-modern > .toc nav ul ul {
+    padding-left: 16px;
     margin: 4px 0;
 }
 
@@ -109,6 +115,7 @@
     box-shadow: none; /* avoid double underline from common styles */
 }
 
+.post-modern > .toc nav > ul > li > a,
 .post-modern > .toc > ul > li > a {
     color: var(--content);
     font-weight: 500;
@@ -283,6 +290,23 @@
     padding: 16px;
 }
 
+/* Remove inner framing when wrapped by Chroma/highlight container */
+.post-modern .post-content .highlight pre,
+.post-modern .post-content .chroma pre {
+    background: transparent;
+    border: 0;
+    box-shadow: none;
+}
+
+.post-modern .post-content .highlight pre code,
+.post-modern .post-content .chroma pre code {
+    background: transparent !important; /* avoid nested block background */
+    border-radius: 0;
+    display: block;
+    padding: 16px; /* keep comfortable padding */
+    color: var(--content);
+}
+
 /* Media blocks */
 .post-modern .post-content iframe,
 .post-modern .post-content img,
@@ -380,13 +404,24 @@
     font-style: italic;
     line-height: 1.5;
     text-align: center;
-    padding: 12px 24px;
+    /* Tight spacing between image and caption per reference */
+    padding: 8px 0 0;
 }
 
 /* LQIP wrapper */
 .post-modern .post-content .lqip {
     background-size: cover;
     background-position: center;
+}
+
+/* Remove default image vertical margins when inside figure to keep
+   caption close to media (matches reference spacing) */
+.post-modern .post-content figure > img,
+.post-modern .post-content figure img,
+.post-modern .post-content figure > .img-link,
+.post-modern .post-content figure > .img-link img,
+.post-modern .post-content figure > video {
+    margin: 0;
 }
 
 /* Responsive */
