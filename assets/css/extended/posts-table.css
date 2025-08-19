@@ -1,7 +1,7 @@
 main .posts-table {
     border-collapse: collapse;
     font-size: 1rem;
-    margin-top: 2rem;
+    margin-top: 1rem;
     width: 100%;
 }
 
@@ -10,13 +10,14 @@ main .posts-table {
 
 :is(main .posts-table) tr:hover { background-color: rgba(0,0,0,.01); }
 
-:is(main .posts-table) td { padding: .5rem 0; vertical-align: top; }
+:is(main .posts-table) td { padding: .35rem 0; vertical-align: top; }
 
 :is(main .posts-table) .post-meta {
     color: #888;
     font-size: .9rem;
     font-variant-numeric: tabular-nums;
-    padding-top: .5rem;
+    padding-top: .1rem;
+    line-height: 1.35;
     text-align: right;
     white-space: nowrap;
     width: 1%;
@@ -27,6 +28,7 @@ main .posts-table {
 :is(main .posts-table) .post-title a {
     font-weight: 500;
     font-size: 1rem;
+    line-height: 1.35;
     display: inline;
     white-space: nowrap;
 }

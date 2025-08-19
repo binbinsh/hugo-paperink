@@ -320,6 +320,25 @@
     transition: box-shadow .3s ease;
 }
 
+/* Inline icons/small images within text (e.g., logos inside links) should not be
+   promoted to block elements or forced to full width. Reset styles for images
+   that appear inline inside paragraphs, list items, or links. */
+.post-modern .post-content a > img,
+.post-modern .post-content p > img,
+.post-modern .post-content li img,
+.post-modern .post-content img.inline,
+.post-modern .post-content img.in-text {
+    display: inline;
+    width: auto;
+    max-width: 100%;
+    height: auto;
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    vertical-align: middle;
+}
+
 .post-modern .post-content .full-bleed,
 .post-modern .post-content .full-bleed > img,
 .post-modern .post-content .full-bleed > video,
