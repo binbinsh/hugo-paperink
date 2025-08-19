@@ -1,6 +1,8 @@
 <tr>
   <td class="post-title">
-    <a href="{{ .p.Permalink }}" aria-label="{{ .p.Title | plainify }}">{{ .p.Title }}</a>
+    <a href="{{ .p.Permalink }}" aria-label="{{ (.p.Date | time.Format (default "2006-01-02" site.Params.DateFormat)) }} — {{ .p.Title | plainify }}">
+      <time class="post-date" datetime="{{ .p.Date | time.Format "2006-01-02T15:04:05Z07:00" }}">{{ .p.Date | time.Format (default "2006-01-02" site.Params.DateFormat) }}</time>{{ .p.Title }}
+    </a>
   </td>
   <td class="post-meta">
     {{- if (.p.Param "ShowReadingTime") -}}

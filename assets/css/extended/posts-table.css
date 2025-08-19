@@ -31,7 +31,14 @@ main .posts-table {
 
 :is(main .posts-table) .post-title { width: 99%; }
 
-:is(main .posts-table) .post-title a { font-weight: 500; font-size: 1rem; }
+:is(main .posts-table) .post-title a { font-weight: 500; font-size: 1rem; display: inline-block; }
+
+:is(main .posts-table) .post-title a .post-date,
+:is(main .posts-table) .post-title a time.post-date {
+    color: #888;
+    margin-inline-end: 0.5rem;
+    white-space: nowrap;
+}
 
 /* match reference: date removed from title; keep spacing consistent */
 

@@ -78,7 +78,7 @@
     display: block;
     color: var(--secondary);
     text-transform: uppercase;
-    font-size: 0.75rem; /* GitHub-like small caption */
+    font-size: 0.75rem;
     font-weight: 600;
     letter-spacing: 0.1em;
     margin-bottom: 8px;
@@ -456,3 +456,24 @@ body:not(.list) {
 }
 
 
+
+/* Post-modern: cleaner tag chips in footer */
+.post-modern .post-footer .post-tags {
+    gap: 8px;
+}
+
+.post-modern .post-footer .post-tags a {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--secondary);
+    line-height: 30px;
+    padding: 0 12px;
+    border-radius: 999px;
+    transition: background-color .15s ease, border-color .15s ease, color .15s ease;
+}
+
+.post-modern .post-footer .post-tags a:hover {
+    background: rgba(245, 158, 11, 0.06);
+    border-color: #f59e0b;
+    color: var(--content);
+}
