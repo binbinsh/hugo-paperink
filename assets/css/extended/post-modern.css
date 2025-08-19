@@ -2,8 +2,12 @@
 
 .post-modern {
     display: grid;
-    grid-template-columns: 220px minmax(0, 1fr);
-    grid-column-gap: var(--gap);
+    /* Reference layout variables */
+    --col-width: 60px;
+    --col-gap: 32px;
+    /* Left TOC fixed at 220px; text area is 8 columns with 7 gaps */
+    grid-template-columns: 220px minmax(0, calc(var(--col-width) * 8 + var(--col-gap) * 7));
+    grid-column-gap: var(--col-gap);
     font-family: "Roboto Flex", -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
@@ -383,10 +387,19 @@
 }
 
 /* Responsive */
+/* Match reference breakpoints for column sizing */
+@media (max-width: 1200px) {
+    .post-modern {
+        --col-width: 50px;
+        --col-gap: 16px;
+        grid-template-columns: 220px minmax(0, calc(var(--col-width) * 8 + var(--col-gap) * 7));
+    }
+}
+
 @media (max-width: 1000px) {
     .post-modern {
-        grid-template-columns: 180px minmax(0, 1fr);
-        grid-column-gap: calc(var(--gap) * 0.75);
+        --col-width: 45px;
+        grid-template-columns: 180px minmax(0, calc(var(--col-width) * 8 + var(--col-gap) * 7));
     }
 }
 
@@ -400,26 +413,43 @@
 }
 
 
-/* Wider container for single post pages */
+/* Container width computed from reference grid:
+   220px left column + text area (8 cols) + one inter-column gap */
 body:not(.list) {
-	--main-width: 1100px;
+	--main-width: 956px; /* 220 + (60*8 + 32*7) + 32 */
 }
 
-@media (min-width: 1400px) {
+@media (max-width: 1200px) {
 	body:not(.list) {
-		--main-width: 1200px;
+		--main-width: 748px; /* 220 + (50*8 + 16*7) + 16 */
+	}
+}
+
+@media (max-width: 1000px) {
+	body:not(.list) {
+		--main-width: 668px; /* 180 + (45*8 + 16*7) + 16 */
+	}
+}
+
+@media (max-width: 768px) {
+	body:not(.list) {
+		--main-width: calc(100vw - var(--gap) * 2);
 	}
 }
 
 /* When there is no TOC, use single-column layout and full-width header/content */
 .post-modern.no-toc {
     display: block;
+    --text-max-width: calc(var(--col-width) * 8 + var(--col-gap) * 7);
 }
 
 .post-modern.no-toc .post-header,
 .post-modern.no-toc .post-content,
 .post-modern.no-toc .post-footer {
     grid-column: auto;
+    max-width: var(--text-max-width);
+    margin-left: auto;
+    margin-right: auto;
 }
 
 
