@@ -132,14 +132,23 @@
 
 .post-content table {
     margin-bottom: var(--content-gap);
+    /* Avoid inner horizontal scrollbars and make columns shrinkable */
+    table-layout: fixed;
+    width: 100%;
+    overflow-x: visible;
 }
 
 .post-content table th,
 .post-content table:not(.highlighttable, .highlight table, .gist .highlight) td {
-    min-width: 80px;
+    /* Allow many columns to fit without forcing horizontal scroll */
+    min-width: 0;
     padding: 8px 5px;
     line-height: 1.5;
     border-bottom: 1px solid var(--border);
+    /* Wrap long words/URLs to keep table within container */
+    white-space: normal;
+    word-break: break-word;
+    overflow-wrap: anywhere;
 }
 
 .post-content table th {
@@ -155,7 +164,7 @@
 }
 
 .post-content .highlight:not(table) {
-    margin: 10px auto 0; /* remove bottom margin to tighten spacing below code blocks */
+    margin: 10px auto var(--content-gap); /* add bottom spacing so text doesn't touch code block */
     background: var(--code-block-bg) !important;
     border: 1px solid var(--border);
     border-radius: var(--radius);
@@ -175,6 +184,16 @@
 .post-content .chroma pre { 
     margin: 0; 
     margin-bottom: 0 !important;
+}
+
+/* When Chroma renders without the outer .highlight wrapper, ensure spacing below */
+.post-content .chroma {
+    margin-bottom: var(--content-gap);
+}
+
+/* Standalone pre.chroma fallback (not wrapped by .highlight/.chroma container) */
+.post-content pre.chroma {
+    margin: 10px auto var(--content-gap);
 }
 
 /* Ensure inner Chroma element does not draw a second frame */

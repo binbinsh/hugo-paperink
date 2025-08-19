@@ -215,17 +215,21 @@
 
 /* Tables */
 .post-modern .post-content .table-container {
-    overflow-x: auto;
+    /* Do not force horizontal scroll bars; let table wrap instead */
+    overflow-x: visible;
 }
 
 .post-modern .post-content table {
     background: var(--entry);
     border: 1px solid var(--border);
     border-collapse: collapse;
+    display: table;
     box-shadow: 0 1px 3px rgba(0,0,0,.02);
     font-size: 0.9rem;
-    min-width: 500px;
+    /* Allow tables to shrink on small screens without scrolling */
+    min-width: 0;
     width: 100%;
+    table-layout: fixed;
 }
 
 .post-modern .post-content table th,
@@ -233,6 +237,36 @@
     border: 1px solid var(--border);
     padding: 12px;
     text-align: left;
+    /* Wrap long words/URLs to avoid horizontal overflow */
+    white-space: normal;
+    word-break: break-word;
+    overflow-wrap: anywhere;
+}
+
+/* Wide tables: let tables exceed the text column width */
+/* With TOC present: keep left aligned to text column, extend to the right viewport edge */
+.post-modern:not(.no-toc) .post-content table:not(.highlighttable) {
+    /* Keep left edge aligned with text column, extend width to right viewport edge */
+    margin-right: calc(50% - 50vw);
+    width: calc(100% + (50vw - 50%));
+    max-width: none;
+}
+
+/* Without TOC: extend symmetrically to both sides (full-bleed) */
+.post-modern.no-toc .post-content table:not(.highlighttable) {
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    width: 100vw; /* override column width to viewport width */
+    max-width: none;
+}
+
+/* Prevent double border on the right edge */
+.post-modern .post-content table th:last-child,
+.post-modern .post-content table td:last-child {
+    border-right: 0;
 }
 
 .post-modern .post-content table th {
