@@ -38,7 +38,7 @@ main .posts-table {
 
 :is(main .posts-table) .post-title a {
     font-weight: 500;
-    /* match reference spacing: do not override line-height or force flex */
+    font-size: 1rem;
 }
 
 :is(main .posts-table) .post-title a .post-date,
