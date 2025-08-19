@@ -5,14 +5,14 @@ main .posts-table {
     border-collapse: collapse;
     border-spacing: 0;
     font-size: 1rem;
-    margin-top: 1rem;
+    margin-top: 2rem;
     width: 100%;
 }
 
 /* tighter rows but keep subtle divider */
 :is(main .posts-table) tr { 
     display: table-row; /* ensure cells stay on the same row */
-    border-bottom: 1px solid #eaeaea; 
+    border-bottom: 1px solid #e5e5e5; 
     transition: background-color .2s ease; 
 }
 
@@ -20,16 +20,15 @@ main .posts-table {
 
 :is(main .posts-table) td { 
     display: table-cell; /* align meta to the right of title */
-    padding: 0; /* match reference: very tight rows */
-    vertical-align: middle; 
+    padding: .75rem 1rem;
+    vertical-align: top; 
 }
 
 :is(main .posts-table) .post-meta {
     color: #888;
     font-size: .9rem;
     font-variant-numeric: tabular-nums;
-    padding-top: 0;
-    line-height: 1; /* perfectly tight like reference */
+    padding-top: 1rem;
     text-align: right;
     white-space: nowrap;
     width: 1%;
@@ -39,12 +38,7 @@ main .posts-table {
 
 :is(main .posts-table) .post-title a {
     font-weight: 500;
-    font-size: 1rem;
-    line-height: 1; /* remove extra vertical space */
-    display: flex; /* center content vertically within the row height */
-    align-items: center;
-    height: 100%;
-    white-space: nowrap;
+    /* match reference spacing: do not override line-height or force flex */
 }
 
 :is(main .posts-table) .post-title a .post-date,
@@ -53,7 +47,6 @@ main .posts-table {
     margin-inline-end: 0.5rem;
     white-space: nowrap;
     display: inline;
-    line-height: 1;
 }
 
 /* match reference: date removed from title; keep spacing consistent */

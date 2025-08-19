@@ -16,27 +16,29 @@
 {{- $attributes := merge .Attributes (dict "alt" .Text "src" $src "title" (.Title | transform.HTMLEscape) "loading" "lazy" "decoding" "async") -}}
 {{- $path := strings.TrimPrefix "./" $u.Path -}}
 {{- $res := or (.PageInner.Resources.Get $path) (resources.Get $path) -}}
-{{- if and $res (in $res.MediaType.Type "image") -}}
-  {{- $w := $res.Width | default 0 -}}
-  {{- $h := $res.Height | default 0 -}}
-  {{- $ph := $res.Fit "24x q20" -}}
-  <span class="lqip" style="background-image: url('{{ $ph.RelPermalink }}');{{ if and $w $h }} aspect-ratio: {{ $w }}/{{ $h }};{{ end }} display:block;">
+<a class="img-link" href="{{ $src }}" target="_blank" rel="noopener">
+  {{- if and $res (in $res.MediaType.Type "image") -}}
+    {{- $w := $res.Width | default 0 -}}
+    {{- $h := $res.Height | default 0 -}}
+    {{- $ph := $res.Fit "24x q20" -}}
+    <span class="lqip" style="background-image: url('{{ $ph.RelPermalink }}');{{ if and $w $h }} aspect-ratio: {{ $w }}/{{ $h }};{{ end }} display:block;">
+      <img
+        {{- if and $w $h -}} width="{{ $w }}" height="{{ $h }}"{{- end -}}
+        onload="this.style.opacity=1"
+        style="opacity:0;transition:opacity .3s ease"
+        {{- range $k, $v := $attributes -}}
+          {{- if $v -}}
+            {{- printf " %s=%q" $k $v | safeHTMLAttr -}}
+          {{- end -}}
+        {{- end -}}>
+    </span>
+  {{- else -}}
     <img
-      {{- if and $w $h -}} width="{{ $w }}" height="{{ $h }}"{{- end -}}
-      onload="this.style.opacity=1"
-      style="opacity:0;transition:opacity .3s ease"
       {{- range $k, $v := $attributes -}}
         {{- if $v -}}
           {{- printf " %s=%q" $k $v | safeHTMLAttr -}}
         {{- end -}}
       {{- end -}}>
-  </span>
-{{- else -}}
-  <img
-    {{- range $k, $v := $attributes -}}
-      {{- if $v -}}
-        {{- printf " %s=%q" $k $v | safeHTMLAttr -}}
-      {{- end -}}
-    {{- end -}}>
-{{- end -}}
+  {{- end -}}
+</a>
 {{- /**/ -}}

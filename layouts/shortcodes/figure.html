@@ -2,17 +2,19 @@
            {{- if eq (.Get "align") "center" }}align-center {{ end }}
            {{- with .Get "class" }}{{ . }}{{- end }}"
 {{- end -}}>
-    {{- if .Get "link" -}}
-        <a href="{{ .Get "link" }}"{{ with .Get "target" }} target="{{ . }}"{{ end }}{{ with .Get "rel" }} rel="{{ . }}"{{ end }}>
-    {{- end }}
-    <img loading="lazy" src="{{ .Get "src" }}{{- if eq (.Get "align") "center" }}#center{{- end }}"
-         {{- if or (.Get "alt") (.Get "caption") }}
-         alt="{{ with .Get "alt" }}{{ . }}{{ else }}{{ .Get "caption" | markdownify| plainify }}{{ end }}"
-         {{- end -}}
-         {{- with .Get "width" }} width="{{ . }}"{{ end -}}
-         {{- with .Get "height" }} height="{{ . }}"{{ end -}}
-    /> <!-- Closing img tag -->
-    {{- if .Get "link" }}</a>{{ end -}}
+    {{- $imgsrc := printf "%s%s" (.Get "src") (cond (eq (.Get "align") "center") "#center" "") -}}
+    {{- $link := .Get "link" | default $imgsrc -}}
+    {{- $target := .Get "target" | default "_blank" -}}
+    {{- $rel := .Get "rel" | default "noopener" -}}
+    <a href="{{ $link }}" target="{{ $target }}" rel="{{ $rel }}">
+      <img loading="lazy" src="{{ $imgsrc }}"
+           {{- if or (.Get "alt") (.Get "caption") }}
+           alt="{{ with .Get "alt" }}{{ . }}{{ else }}{{ .Get "caption" | markdownify| plainify }}{{ end }}"
+           {{- end -}}
+           {{- with .Get "width" }} width="{{ . }}"{{ end -}}
+           {{- with .Get "height" }} height="{{ . }}"{{ end -}}
+      /> <!-- Closing img tag -->
+    </a>
     {{- if or (or (.Get "title") (.Get "caption")) (.Get "attr") -}}
         <figcaption>
             {{ with (.Get "title") -}}
