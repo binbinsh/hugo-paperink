@@ -1,16 +1,28 @@
 main .posts-table {
+    /* Force real table layout to avoid reset.css overriding it to block */
+    display: table;
+    table-layout: auto;
     border-collapse: collapse;
+    border-spacing: 0;
     font-size: 1rem;
     margin-top: 1rem;
     width: 100%;
 }
 
 /* tighter rows but keep subtle divider */
-:is(main .posts-table) tr { border-bottom: 1px solid #eaeaea; transition: background-color .2s ease; }
+:is(main .posts-table) tr { 
+    display: table-row; /* ensure cells stay on the same row */
+    border-bottom: 1px solid #eaeaea; 
+    transition: background-color .2s ease; 
+}
 
 :is(main .posts-table) tr:hover { background-color: rgba(0,0,0,.01); }
 
-:is(main .posts-table) td { padding: .2rem 0; vertical-align: middle; }
+:is(main .posts-table) td { 
+    display: table-cell; /* align meta to the right of title */
+    padding: .2rem 0; 
+    vertical-align: middle; 
+}
 
 :is(main .posts-table) .post-meta {
     color: #888;
