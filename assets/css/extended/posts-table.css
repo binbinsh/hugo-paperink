@@ -6,13 +6,12 @@ main .posts-table {
     border-spacing: 0;
     font-size: 1rem;
     margin-top: 2rem;
-    margin-bottom: 1rem; /* add breathing room before paginator */
+    margin-bottom: 1rem;
     width: 100%;
 }
 
-/* tighter rows but keep subtle divider */
 :is(main .posts-table) tr { 
-    display: table-row; /* ensure cells stay on the same row */
+    display: table-row;
     border-bottom: 1px solid #e5e5e5; 
     transition: background-color .2s ease; 
 }
@@ -20,8 +19,8 @@ main .posts-table {
 :is(main .posts-table) tr:hover { background-color: rgba(0,0,0,.01); }
 
 :is(main .posts-table) td { 
-    display: table-cell; /* align meta to the right of title */
-    padding: 0 1rem; /* tighter vertical spacing */
+    display: table-cell;
+    padding: 0.75rem 1rem;
     vertical-align: middle; 
 }
 
@@ -29,8 +28,9 @@ main .posts-table {
     color: #888;
     font-size: .9rem;
     font-variant-numeric: tabular-nums;
-    padding-top: 0;
-    line-height: 1; /* compact height */
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+    line-height: 1;
     text-align: right;
     white-space: nowrap;
     width: 1%;
@@ -41,11 +41,11 @@ main .posts-table {
 :is(main .posts-table) .post-title a {
     font-weight: 500;
     font-size: 1rem;
-    line-height: 1; /* reduce leading so rows are compact */
-    display: block; /* occupy cell width to enable ellipsis */
-    white-space: nowrap; /* keep each row to a single line */
-    overflow: hidden; /* avoid pushing the meta cell */
-    text-overflow: ellipsis; /* gracefully truncate long titles */
+    line-height: 1;
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 :is(main .posts-table) .post-title a .post-date,
@@ -56,8 +56,6 @@ main .posts-table {
     display: inline-block;
     line-height: 1;
 }
-
-/* match reference: date removed from title; keep spacing consistent */
 
 @media (max-width: 800px) {
     :is(main .posts-table) td:first-child { padding-left: 0; }
