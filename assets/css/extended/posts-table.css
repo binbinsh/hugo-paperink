@@ -5,19 +5,12 @@ main .posts-table {
     width: 100%;
 }
 
-:is(main .posts-table) tr {
-    border-bottom: 1px solid #e5e5e5;
-    transition: background-color .2s ease;
-}
+/* tighter rows but keep subtle divider */
+:is(main .posts-table) tr { border-bottom: 1px solid #eaeaea; transition: background-color .2s ease; }
 
-:is(main .posts-table) tr:hover {
-    background-color: rgba(0,0,0,.01);
-}
+:is(main .posts-table) tr:hover { background-color: rgba(0,0,0,.01); }
 
-:is(main .posts-table) td {
-    padding: .75rem 1rem;
-    vertical-align: top;
-}
+:is(main .posts-table) td { padding: .5rem 0; vertical-align: top; }
 
 :is(main .posts-table) .post-meta {
     color: #888;
