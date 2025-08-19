@@ -400,3 +400,15 @@
 }
 
 
+/* Wider container for single post pages */
+body:not(.list) {
+	--main-width: 1100px;
+}
+
+@media (min-width: 1400px) {
+	body:not(.list) {
+		--main-width: 1200px;
+	}
+}
+
+

@@ -2,11 +2,11 @@
 
 ## READ BEFORE OPENING A PR
 
-Thank you for contributing to hugo-PaperMod!
+Thank you for contributing to hugo-PaperInk!
 Please fill out the following questions to make it easier for us to review your
 changes. You do not need to check all the boxes below.
 
-**NOTE**: PaperMod does not have any external dependencies fetched from 3rd party
+**NOTE**: PaperInk does not have any external dependencies fetched from 3rd party
 CDN servers. However we do have custom Head/Footer extender templates which you can use
 to add those to your website.
 https://github.com/adityatelange/hugo-PaperMod/wiki/FAQs#custom-head--footer
