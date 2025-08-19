@@ -12,6 +12,7 @@
 
 .pagination {
     display: flex;
+    margin-top: 8px; /* space paginator away from list/table */
 }
 
 .pagination a {

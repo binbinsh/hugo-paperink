@@ -6,6 +6,7 @@ main .posts-table {
     border-spacing: 0;
     font-size: 1rem;
     margin-top: 2rem;
+    margin-bottom: 1rem; /* add breathing room before paginator */
     width: 100%;
 }
 
@@ -41,6 +42,10 @@ main .posts-table {
     font-weight: 500;
     font-size: 1rem;
     line-height: 1; /* reduce leading so rows are compact */
+    display: block; /* occupy cell width to enable ellipsis */
+    white-space: nowrap; /* keep each row to a single line */
+    overflow: hidden; /* avoid pushing the meta cell */
+    text-overflow: ellipsis; /* gracefully truncate long titles */
 }
 
 :is(main .posts-table) .post-title a .post-date,
@@ -48,7 +53,7 @@ main .posts-table {
     color: #888;
     margin-inline-end: 0.5rem;
     white-space: nowrap;
-    display: inline;
+    display: inline-block;
     line-height: 1;
 }
 
