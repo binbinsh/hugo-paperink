@@ -3,6 +3,46 @@
 {{- /* Footer custom content area end */ -}}
 <script>
   (function () {
+    // Make standalone images clickable: open original image in a new tab
+    function enableClickToOpenImages() {
+      var scope = document.querySelector('.post-modern .post-content') || document.querySelector('.post-content') || document;
+      if (!scope) return;
+      var imgs = scope.querySelectorAll('img');
+      imgs.forEach(function (img) {
+        // Skip images already inside a link
+        if (img.closest('a')) return;
+        // Skip icons/logos that explicitly disable pointer events
+        if (img.style.pointerEvents === 'none') return;
+        // Mark interactive and add handler
+        img.style.cursor = 'zoom-in';
+        img.setAttribute('data-clickable', '1');
+        img.addEventListener('click', function () {
+          var src = img.getAttribute('data-fullsrc') || img.currentSrc || img.src;
+          if (src) window.open(src, '_blank', 'noopener');
+        });
+        // Keyboard accessibility
+        img.setAttribute('tabindex', '0');
+        img.setAttribute('role', 'button');
+        img.addEventListener('keydown', function (e) {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            var src = img.getAttribute('data-fullsrc') || img.currentSrc || img.src;
+            if (src) window.open(src, '_blank', 'noopener');
+          }
+        });
+      });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', enableClickToOpenImages);
+    } else {
+      enableClickToOpenImages();
+    }
+  })();
+</script>
+
+<script>
+  (function () {
     var toc = document.querySelector('.post-modern > .toc');
     if (!toc) return;
     var links = toc.querySelectorAll('a[href^="#"]');

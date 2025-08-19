@@ -33,6 +33,43 @@
 {{- partial "extend_footer.html" . }}
 
 <script>
+    // Minimal lightbox: intercept clicks on images and image links
+    (function(){
+        function ensureLightboxRoot(){
+            var root = document.getElementById('image-lightbox-root');
+            if (root) return root;
+            root = document.createElement('div');
+            root.id = 'image-lightbox-root';
+            root.className = 'image-lightbox';
+            root.innerHTML = '<img alt="Expanded image">';
+            root.addEventListener('click', function(){ root.classList.remove('open'); });
+            document.body.appendChild(root);
+            document.addEventListener('keydown', function(e){
+                if (e.key === 'Escape') root.classList.remove('open');
+            });
+            return root;
+        }
+        function openLightbox(src){
+            if (!src) return;
+            var root = ensureLightboxRoot();
+            var img = root.querySelector('img');
+            img.src = src;
+            root.classList.add('open');
+        }
+        // Expose for other scripts
+        window.__openImageLightbox = openLightbox;
+        // Intercept clicks on anchors with class img-link
+        document.addEventListener('click', function(e){
+            var a = e.target.closest('a.img-link');
+            if (!a) return;
+            var href = a.getAttribute('href');
+            if (!href) return;
+            e.preventDefault();
+            openLightbox(href);
+        });
+    })();
+</script>
+<script>
     let menu = document.getElementById('menu')
     if (menu) {
         menu.scrollLeft = localStorage.getItem("menu-scroll-position");

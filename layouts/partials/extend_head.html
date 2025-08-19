@@ -15,3 +15,27 @@
     }
   });
 </script>
+
+<style>
+  /* Lightweight image lightbox */
+  .image-lightbox {
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.85);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    cursor: zoom-out;
+  }
+  .image-lightbox.open { display: flex; }
+  .image-lightbox img {
+    max-width: 95vw;
+    max-height: 95vh;
+    box-shadow: 0 8px 32px rgba(0,0,0,.5);
+    border-radius: 4px;
+  }
+</style>
