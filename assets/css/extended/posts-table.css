@@ -31,7 +31,9 @@ main .posts-table {
 
 :is(main .posts-table) .post-title { width: 99%; }
 
-:is(main .posts-table) .post-title a { font-weight: 500; }
+:is(main .posts-table) .post-title a { font-weight: 500; font-size: 1rem; }
+
+/* match reference: date removed from title; keep spacing consistent */
 
 @media (max-width: 800px) {
     :is(main .posts-table) td:first-child { padding-left: 0; }
