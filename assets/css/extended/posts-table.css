@@ -20,15 +20,16 @@ main .posts-table {
 
 :is(main .posts-table) td { 
     display: table-cell; /* align meta to the right of title */
-    padding: .75rem 1rem;
-    vertical-align: top; 
+    padding: 0 1rem; /* tighter vertical spacing */
+    vertical-align: middle; 
 }
 
 :is(main .posts-table) .post-meta {
     color: #888;
     font-size: .9rem;
     font-variant-numeric: tabular-nums;
-    padding-top: 1rem;
+    padding-top: 0;
+    line-height: 1; /* compact height */
     text-align: right;
     white-space: nowrap;
     width: 1%;
@@ -39,6 +40,7 @@ main .posts-table {
 :is(main .posts-table) .post-title a {
     font-weight: 500;
     font-size: 1rem;
+    line-height: 1; /* reduce leading so rows are compact */
 }
 
 :is(main .posts-table) .post-title a .post-date,
@@ -47,6 +49,7 @@ main .posts-table {
     margin-inline-end: 0.5rem;
     white-space: nowrap;
     display: inline;
+    line-height: 1;
 }
 
 /* match reference: date removed from title; keep spacing consistent */
