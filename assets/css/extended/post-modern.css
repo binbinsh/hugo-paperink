@@ -411,4 +411,15 @@ body:not(.list) {
 	}
 }
 
+/* When there is no TOC, use single-column layout and full-width header/content */
+.post-modern.no-toc {
+    display: block;
+}
+
+.post-modern.no-toc .post-header,
+.post-modern.no-toc .post-content,
+.post-modern.no-toc .post-footer {
+    grid-column: auto;
+}
+
 

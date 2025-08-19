@@ -1,6 +1,6 @@
 .main .posts-table {
     border-collapse: collapse;
-    font-size: 1rem;
+    font-size: 0.95rem;
     margin-top: 2rem;
     width: 100%;
 }
@@ -29,6 +29,7 @@
 
 .main .posts-table .post-title a {
     font-weight: 500;
+    font-size: 1.05em;
     display: inline-block;
 }
 
@@ -41,13 +42,14 @@
 .main .posts-table .post-title a .post-date,
 .main .posts-table .post-title a time.post-date {
     color: var(--secondary);
+    font-size: 0.95em;
     margin-inline-end: 0.5rem;
     white-space: nowrap;
 }
 
 .main .posts-table .post-meta {
     color: var(--secondary);
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     font-variant-numeric: tabular-nums;
     padding-top: 1rem;
     text-align: right;
