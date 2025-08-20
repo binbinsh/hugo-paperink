@@ -65,7 +65,13 @@
     position: sticky;
     top: calc(var(--header-height) + var(--gap));
     max-height: calc(100vh - var(--header-height) - var(--gap) * 2);
-    overflow: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
+    /* Fix width to the grid track to avoid horizontal jitter when active item style changes */
+    width: 100%;
+    box-sizing: border-box;
+    /* Reserve space for scrollbar to prevent layout shift when it appears */
+    scrollbar-gutter: stable both-edges;
     background: transparent;
     border: 0;
     padding: 0;
@@ -115,6 +121,9 @@
     color: var(--secondary);
     text-decoration: none;
     padding: 4px 0;
+    /* Wrap long headings to avoid horizontal overflow */
+    overflow-wrap: anywhere;
+    word-break: break-word;
 }
 
 .post-modern > .toc a:hover {
@@ -229,7 +238,8 @@
     /* Allow tables to shrink on small screens without scrolling */
     min-width: 0;
     width: 100%;
-    table-layout: fixed;
+    /* Let column widths adapt to content so short columns don't become too wide */
+    table-layout: auto;
 }
 
 .post-modern .post-content table th,
@@ -243,17 +253,16 @@
     overflow-wrap: anywhere;
 }
 
-/* Wide tables: let tables exceed the text column width */
-/* With TOC present: keep left aligned to text column, extend to the right viewport edge */
-.post-modern:not(.no-toc) .post-content table:not(.highlighttable) {
+/* Wide tables behavior is opt-in to avoid overly large tables by default */
+/* Add .allow-wide-tables on the root .post-modern container to enable full-bleed tables */
+.post-modern.allow-wide-tables:not(.no-toc) .post-content table:not(.highlighttable) {
     /* Keep left edge aligned with text column, extend width to right viewport edge */
     margin-right: calc(50% - 50vw);
     width: calc(100% + (50vw - 50%));
     max-width: none;
 }
 
-/* Without TOC: extend symmetrically to both sides (full-bleed) */
-.post-modern.no-toc .post-content table:not(.highlighttable) {
+.post-modern.allow-wide-tables.no-toc .post-content table:not(.highlighttable) {
     position: relative;
     left: 50%;
     right: 50%;
@@ -269,10 +278,21 @@
     border-right: 0;
 }
 
+/* Remove duplicated top border line so it doesn't look like an extra empty row */
+.post-modern .post-content table tr:first-child th,
+.post-modern .post-content table tr:first-child td {
+    border-top: 0;
+}
+
 .post-modern .post-content table th {
     font-size: 0.875rem;
     font-weight: 600;
     letter-spacing: 0.025em;
+}
+
+/* Hide an accidental empty first data row (if present) */
+.post-modern .post-content table tbody tr:first-child:not(:has(> th:not(:empty), > td:not(:empty))) {
+    display: none;
 }
 
 /* Details */
