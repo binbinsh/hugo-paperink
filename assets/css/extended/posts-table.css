@@ -60,6 +60,15 @@ main .posts-table {
 @media (max-width: 800px) {
     :is(main .posts-table) td:first-child { padding-left: 0; }
     :is(main .posts-table) td:last-child { padding-right: 0; }
+    /* Allow long titles to wrap on narrow screens (e.g., iPhone) */
+    :is(main .posts-table) .post-title a {
+        white-space: normal;
+        overflow: visible;
+        text-overflow: clip;
+        word-break: break-word;
+        overflow-wrap: anywhere;
+        line-height: 1.4;
+    }
 }
 
 
