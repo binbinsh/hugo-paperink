@@ -70,48 +70,118 @@
 
 <script>
   (function () {
+    var selectors = [
+      'pre code.language-mermaid',
+      'pre code[class*="language-mermaid"]',
+      'pre code.language-fallback'
+    ];
+
     function isMermaidDiagram(text) {
       if (!text) return false;
       var t = text.replace(/^\s+/, '');
       return /^(graph|flowchart|sequenceDiagram|gantt|classDiagram|stateDiagram|erDiagram|journey|gitGraph|pie|mindmap|timeline|quadrantChart|xychart-beta|packet)/.test(t);
     }
 
-    function convertMermaidCodeBlocks() {
-      var selectors = [
-        'pre code.language-mermaid',
-        'pre code[class*="language-mermaid"]',
-        'pre code.language-fallback'
-      ];
+    function findMermaidCandidates() {
       var nodes = document.querySelectorAll(selectors.join(','));
+      var matches = [];
       nodes.forEach(function (codeEl) {
         var text = codeEl.textContent || '';
         var isExplicit = codeEl.className && codeEl.className.indexOf('language-mermaid') !== -1;
-        if (!isExplicit && !isMermaidDiagram(text)) return;
+        if (isExplicit || isMermaidDiagram(text)) {
+          matches.push({ codeEl: codeEl, text: text });
+        }
+      });
+      return matches;
+    }
+
+    function convertMermaidCodeBlocks() {
+      var items = findMermaidCandidates();
+      items.forEach(function (item) {
+        var codeEl = item.codeEl;
+        var text = item.text;
         var container = document.createElement('div');
         container.className = 'mermaid';
         container.textContent = text;
         var pre = codeEl.closest('pre');
         if (pre && pre.parentNode) pre.parentNode.replaceChild(container, pre);
       });
+      return document.querySelectorAll('.mermaid');
     }
 
-    function initMermaid() {
-      if (window.mermaid) {
-        try {
-          window.mermaid.initialize({ startOnLoad: true, securityLevel: 'loose' });
-        } catch (e) {}
+    function loadMermaid() {
+      if (window.mermaid) return Promise.resolve(window.mermaid);
+      if (window.__mermaidLoadingPromise) return window.__mermaidLoadingPromise;
+      window.__mermaidLoadingPromise = new Promise(function (resolve, reject) {
+        var s = document.createElement('script');
+        s.src = 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js';
+        s.defer = true;
+        s.onload = function () { resolve(window.mermaid); };
+        s.onerror = reject;
+        document.head.appendChild(s);
+      });
+      return window.__mermaidLoadingPromise;
+    }
+
+    function initializeAndRender() {
+      if (!window.mermaid) return;
+      try {
+        window.mermaid.initialize({ startOnLoad: false, securityLevel: 'loose' });
+        window.mermaid.run({ query: '.mermaid' });
+      } catch (e) {}
+    }
+
+    function setupLazyLoad() {
+      var candidates = findMermaidCandidates();
+      if (!candidates.length) return;
+
+      // If IntersectionObserver is unavailable, load immediately
+      if (!('IntersectionObserver' in window)) {
+        convertMermaidCodeBlocks();
+        loadMermaid().then(initializeAndRender).catch(function () {});
+        return;
       }
-    }
 
-    function run() {
-      convertMermaidCodeBlocks();
-      initMermaid();
+      var loaded = false;
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (loaded) return;
+          if (entry.isIntersecting) {
+            loaded = true;
+            try { io.disconnect(); } catch (e) {}
+            convertMermaidCodeBlocks();
+            loadMermaid().then(initializeAndRender).catch(function () {});
+          }
+        });
+      }, { rootMargin: '200px 0px', threshold: 0.01 });
+
+      candidates.slice(0, 3).forEach(function (item) {
+        var el = item.codeEl.closest('pre') || item.codeEl;
+        if (el) io.observe(el);
+      });
+
+      // Trigger immediately if already near viewport
+      setTimeout(function () {
+        if (loaded) return;
+        var near = candidates.some(function (item) {
+          var el = item.codeEl.closest('pre') || item.codeEl;
+          if (!el || !el.getBoundingClientRect) return false;
+          var r = el.getBoundingClientRect();
+          return r.top < (window.innerHeight + 200);
+        });
+        if (near) {
+          loaded = true;
+          try { io.disconnect(); } catch (e) {}
+          convertMermaidCodeBlocks();
+          loadMermaid().then(initializeAndRender).catch(function () {});
+        }
+      }, 0);
     }
 
     if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', run);
+      document.addEventListener('DOMContentLoaded', setupLazyLoad);
     } else {
-      run();
+      setupLazyLoad();
     }
   })();
 </script>

@@ -25,7 +25,7 @@ main .posts-table {
 }
 
 :is(main .posts-table) .post-meta {
-    color: #888;
+    color: var(--secondary);
     font-size: .9rem;
     font-variant-numeric: tabular-nums;
     padding-top: 0.75rem;
@@ -50,7 +50,7 @@ main .posts-table {
 
 :is(main .posts-table) .post-title a .post-date,
 :is(main .posts-table) .post-title a time.post-date {
-    color: #888;
+    color: var(--secondary);
     margin-inline-end: 0.5rem;
     white-space: nowrap;
     display: inline-block;

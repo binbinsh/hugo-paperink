@@ -49,7 +49,7 @@
 }
 
 .post-modern .article-meta .reading-time {
-    color: var(--tertiary);
+    color: var(--secondary);
     font-family: "Roboto Mono", SF Mono, Monaco, Cascadia Code, monospace;
     font-size: 0.8rem;
     font-variant-numeric: tabular-nums;
