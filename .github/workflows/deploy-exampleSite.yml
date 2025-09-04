@@ -1,0 +1,105 @@
+name: Deploy Hugo PaperInk Demo to Cloudflare Pages
+
+on:
+  push:
+    paths-ignore:
+      - "images/**"
+      - "LICENSE"
+      - "README.md"
+    branches:
+      - master
+  workflow_dispatch:
+    # manual run
+    inputs:
+      hugoVersion:
+        description: "Hugo Version"
+        required: false
+        default: "0.146.0"
+
+# Allow one concurrent deployment
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+# Default to bash
+defaults:
+  run:
+    shell: bash
+
+permissions:
+  contents: read
+  deployments: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      HUGO_VERSION: ${{ github.event.inputs.hugoVersion || '0.146.0' }}
+    steps:
+      - name: Install Hugo CLI
+        run: |
+          wget -O ${{ runner.temp }}/hugo.deb https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_${HUGO_VERSION}_linux-amd64.deb \
+          && sudo dpkg -i ${{ runner.temp }}/hugo.deb
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Get Theme
+        run: git submodule update --init --recursive
+      - name: Update theme to Latest commit
+        run: git submodule update --remote --merge
+      - name: Generate exampleSite
+        run: |
+          set -e
+          rm -rf exampleSite
+          mkdir -p exampleSite/themes
+          ln -s "${GITHUB_WORKSPACE}" "exampleSite/themes/PaperInk"
+          cat > exampleSite/hugo.toml <<'EOF'
+          baseURL = 'https://hugo-paperink.pages.dev/'
+          languageCode = 'en'
+          title = 'PaperInk Demo'
+          theme = 'PaperInk'
+          
+          [pagination]
+            pagerSize = 10
+
+          [params]
+            defaultTheme = 'auto'
+
+          [menu]
+            [[menu.main]]
+              identifier = 'posts'
+              name = 'Posts'
+              url = '/posts/'
+              weight = 10
+          EOF
+          mkdir -p exampleSite/content/posts
+          cat > exampleSite/content/_index.md <<'EOF'
+          ---
+          title: "Home"
+          ---
+          Welcome to PaperInk demo.
+          EOF
+          cat > exampleSite/content/posts/hello-world.md <<'EOF'
+          ---
+          title: "Hello World"
+          date: 2025-01-01
+          tags: ["demo"]
+          ---
+          This is a demo post.
+          EOF
+      - name: Build with Hugo
+        run: |
+          hugo -s exampleSite --gc --minify --baseURL https://hugo-paperink.pages.dev
+      - name: Deploy to Cloudflare Pages
+        id: deploy
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          wranglerVersion: '3'
+          command: pages deploy ./exampleSite/public --project-name=hugo-paperink --branch=main
+      - name: Print deployment URLs
+        run: |
+          echo "deployment-url: ${{ steps.deploy.outputs.deployment-url }}"
+          echo "pages-deployment-alias-url: ${{ steps.deploy.outputs.pages-deployment-alias-url }}"

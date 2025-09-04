@@ -6,7 +6,7 @@ license = "MIT"
 licenselink = "https://github.com/binbinsh/hugo-paperink/blob/master/LICENSE"
 description = "A fast, clean, responsive Hugo theme"
 homepage = "https://github.com/binbinsh/hugo-paperink"
-demosite = "https://github.com/binbinsh/hugo-paperink"
+demosite = "https://hugo-paperink.pages.dev"
 tags = [
   "responsive",
   "simple",
