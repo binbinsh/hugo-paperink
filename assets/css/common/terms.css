@@ -1,18 +1,63 @@
+/* Container */
+.terms-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 0;
+}
+
+/* Item reset */
 .terms-tags li {
-    display: inline-block;
-    margin: 10px;
+    list-style: none;
+}
+
+/* Tag pill */
+.terms-tags .tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 12px;
+    background: var(--tertiary);
+    border-radius: var(--radius);
+    color: var(--primary);
     font-weight: 500;
+    text-decoration: none;
+    transition: transform 0.1s, background 0.2s;
 }
 
-.terms-tags a {
-    display: block;
-    padding: 3px 10px;
-    background: var(--tertiary);
-    border-radius: 6px;
-    transition: transform 0.1s;
+.terms-tags .tag:hover {
+    background: color-mix(in srgb, var(--tertiary) 85%, var(--primary));
 }
 
-.terms-tags a:active {
-    background: var(--tertiary);
-    transform: scale(0.96);
+.terms-tags .tag:active {
+    transform: scale(0.98);
+}
+
+/* Name */
+.terms-tags .tag-name {
+    line-height: 1.2;
+}
+
+/* Count badge */
+.terms-tags .tag-count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 6px;
+    min-width: 22px;
+    height: 22px;
+    border-radius: 999px;
+    background: var(--primary);
+    color: var(--theme);
+    font-size: 12px;
+    font-weight: 600;
+}
+
+@media (max-width: 600px) {
+    .terms-tags {
+        gap: 8px;
+    }
+    .terms-tags .tag {
+        padding: 6px 10px;
+    }
 }
