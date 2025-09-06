@@ -8,6 +8,8 @@ main .posts-table {
     margin-top: 2rem;
     margin-bottom: 1rem;
     width: 100%;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
 }
 
 :is(main .posts-table) tr { 
@@ -69,6 +71,12 @@ main .posts-table {
         overflow-wrap: anywhere;
         line-height: 1.4;
     }
+}
+
+/* Archives page should not show top/bottom table borders */
+:is(main .archive-posts .posts-table) {
+    border-top: 0;
+    border-bottom: 0;
 }
 
 
