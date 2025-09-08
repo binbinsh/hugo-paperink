@@ -1,74 +1,91 @@
 main .posts-table {
-    /* Force real table layout to avoid reset.css overriding it to block */
-    display: table;
-    table-layout: auto;
-    border-collapse: collapse;
-    border-spacing: 0;
-    font-size: 1rem;
-    margin-top: 2rem;
-    margin-bottom: 1rem;
-    width: 100%;
+  /* Force real table layout to avoid reset.css overriding it to block */
+  display: table;
+  table-layout: auto;
+  border-collapse: collapse;
+  border-spacing: 0;
+  font-size: 1rem;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  width: 100%;
 }
 
-:is(main .posts-table) tr { 
-    display: table-row;
-    border-bottom: 0;
-    transition: background-color .2s ease; 
+:is(main .posts-table) tr {
+  display: table-row;
+  /* Default: show a subtle divider for each post row */
+  border-bottom: 1px solid #e5e5e5;
+  transition: background-color 0.2s ease;
 }
 
-:is(main .posts-table) tr:hover { background-color: rgba(0,0,0,.01); }
+:is(main .posts-table) tr:hover {
+  background-color: rgba(0, 0, 0, 0.01);
+}
 
-:is(main .posts-table) td { 
-    display: table-cell;
-    padding: 0.9rem 1rem;
-    vertical-align: middle; 
+/* Subtle hover in dark theme */
+.dark :is(main .posts-table) tr:hover {
+  background-color: rgba(255, 255, 255, 0.02);
+}
+
+:is(main .posts-table) td {
+  display: table-cell;
+  padding: 0.9rem 1rem;
+  vertical-align: middle;
+}
+
+/* Archives: no row dividers in archive tables */
+.archive-posts .posts-table tr {
+  border-bottom: 0;
 }
 
 :is(main .posts-table) .post-meta {
-    color: var(--secondary);
-    font-size: .9rem;
-    font-variant-numeric: tabular-nums;
-    padding-top: 0.9rem;
-    padding-bottom: 0.9rem;
-    line-height: 1;
-    text-align: right;
-    white-space: nowrap;
-    width: 1%;
+  color: var(--secondary);
+  font-size: 0.9rem;
+  font-variant-numeric: tabular-nums;
+  padding-top: 0.9rem;
+  padding-bottom: 0.9rem;
+  line-height: 1;
+  text-align: right;
+  white-space: nowrap;
+  width: 1%;
 }
 
-:is(main .posts-table) .post-title { width: 99%; }
+:is(main .posts-table) .post-title {
+  width: 99%;
+}
 
 :is(main .posts-table) .post-title a {
-    font-weight: 500;
-    font-size: 0.9rem;
-    line-height: 1.2;
-    display: block;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  font-weight: 500;
+  font-size: 0.9rem;
+  line-height: 1.2;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 :is(main .posts-table) .post-title a .post-date,
 :is(main .posts-table) .post-title a time.post-date {
-    color: var(--secondary);
-    margin-inline-end: 0.5rem;
-    white-space: nowrap;
-    display: inline-block;
-    line-height: 1;
+  color: var(--secondary);
+  margin-inline-end: 0.5rem;
+  white-space: nowrap;
+  display: inline-block;
+  line-height: 1;
 }
 
 @media (max-width: 800px) {
-    :is(main .posts-table) td:first-child { padding-left: 0; }
-    :is(main .posts-table) td:last-child { padding-right: 0; }
-    /* Allow long titles to wrap on narrow screens (e.g., iPhone) */
-    :is(main .posts-table) .post-title a {
-        white-space: normal;
-        overflow: visible;
-        text-overflow: clip;
-        word-break: break-word;
-        overflow-wrap: anywhere;
-        line-height: 1.4;
-    }
+  :is(main .posts-table) td:first-child {
+    padding-left: 0;
+  }
+  :is(main .posts-table) td:last-child {
+    padding-right: 0;
+  }
+  /* Allow long titles to wrap on narrow screens (e.g., iPhone) */
+  :is(main .posts-table) .post-title a {
+    white-space: normal;
+    overflow: visible;
+    text-overflow: clip;
+    word-break: break-word;
+    overflow-wrap: anywhere;
+    line-height: 1.4;
+  }
 }
-
-
